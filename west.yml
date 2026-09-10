@@ -33,6 +33,16 @@ manifest:
           upstream-url: https://github.com/project-chip/connectedhomeip
           upstream-sha: badaac1eae0df6902c1d009981c0e0d18845aeea
           compare-by-default: false
+    - name: nrfxlib
+      remote: ncs
+      repo-path: sdk-nrfxlib
+      path: nrfxlib
+      revision: collab-hdr
+    - name: openthread
+      remote: ncs
+      repo-path: sdk-openthread
+      path: modules/lib/openthread
+      revision: collab-hdr
 
   self:
     path: ncs-matter

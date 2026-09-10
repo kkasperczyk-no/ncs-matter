@@ -4,6 +4,7 @@ if(CONFIG_OPENTHREAD)
   include(${CMAKE_CURRENT_LIST_DIR}/openthread_kconfig_check.cmake)
 
   # Register all OpenThread Kconfig options that affect the stack.
+  kconfig_to_ot_option(CONFIG_OPENTHREAD_ALTERNATE_PHY OT_ALTERNATE_PHY "Enable Alternate PHY (HDR) capability advertisement" BOOL)
   kconfig_to_ot_option(CONFIG_OPENTHREAD_ANYCAST_LOCATOR OT_ANYCAST_LOCATOR "Enable anycast locator" BOOL)
   kconfig_to_ot_option(CONFIG_ASSERT OT_ASSERT "Enable assert function OT_ASSERT()" BOOL)
   kconfig_to_ot_option(CONFIG_OPENTHREAD_BACKBONE_ROUTER OT_BACKBONE_ROUTER "Enable backbone router functionality" BOOL)
@@ -249,6 +250,16 @@ if(CONFIG_OPENTHREAD)
       )
       add_dependencies(openthread-platform-utils syscall_list_h_target)
       list(APPEND ot_libs openthread-platform-utils-static)
+    endif()
+
+    if(CONFIG_OPENTHREAD_ALTERNATE_PHY_GFSK)
+      zephyr_compile_definitions(NRF_802154_GFSK_2MBPS_PHY_ENABLED=1)
+      target_compile_options(openthread-daps PRIVATE
+        $<TARGET_PROPERTY:zephyr_interface,INTERFACE_COMPILE_OPTIONS>
+        $<TARGET_PROPERTY:compiler,no_builtin>
+      )
+      add_dependencies(openthread-daps syscall_list_h_target)
+      list(APPEND ot_libs openthread-daps-static)
     endif()
 
     target_link_libraries(zephyr PRIVATE ${ot_libs})

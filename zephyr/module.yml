@@ -3,6 +3,8 @@
 
 name: ncs-matter
 build:
+  depends:
+    - nrf
   cmake: .
   kconfig: Kconfig
   sysbuild-kconfig: sysbuild/Kconfig.sysbuild
@@ -10,6 +12,7 @@ build:
   settings:
     dts_root: .
     snippet_root: .
+    module_ext_root: .
 
 samples:
   - samples
