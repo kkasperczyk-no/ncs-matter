@@ -31,6 +31,9 @@ config NETCORE_APP_UPDATE
 config DFU_MULTI_IMAGE_PACKAGE_NET
 	default y
 
+config MCUBOOT_NRF53_MULTI_IMAGE_UPDATE
+	default y if NETCORE_APP_UPDATE
+
 endif
 
 #### DFU multi-image support
